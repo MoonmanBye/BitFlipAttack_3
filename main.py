@@ -90,6 +90,19 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top5.update(acc5.item(), inputs.size(0))
 
         loss.backward()
+        #add random noise
+        ori_grad = model.layer1.weight.grad.clone()
+        var_list.append(torch.var(ori_grad, unbiased=False))
+
+        ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)
+          
+        rand_grad = torch.rand_like(ori_grad).cuda()
+
+        loss_grad = criterion_grad(ori_grad,rand_grad)
+        loss_grad.backward()
+        saved_grad = rand_grad.clone()
+        #Above are added codes
+        
         optimizer.step()
 
         batch_time.update(time.time() - end)
