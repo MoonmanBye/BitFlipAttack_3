@@ -54,7 +54,8 @@ else:
     device = torch.device('cuda')
     print('Using gpu: ' + args.gpu)
 
-
+var_list = []
+criterion_grad = nn.MSELoss()
 def train(loader, model, criterion, optimizer, epoch, C):
     batch_time = AverageMeter('Time', ':6.3f')
     data_time = AverageMeter('Data', ':6.3f')
@@ -91,7 +92,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
 
         loss.backward()
         #add random noise
-        ori_grad = model.layer1.weight.grad.clone()
+        ori_grad = model.module.conv1.weight.grad.clone()
         var_list.append(torch.var(ori_grad, unbiased=False))
 
         ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)
