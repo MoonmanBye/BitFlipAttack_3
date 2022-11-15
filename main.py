@@ -54,7 +54,7 @@ else:
     device = torch.device('cuda')
     print('Using gpu: ' + args.gpu)
 
-var_list = []
+
 criterion_grad = nn.MSELoss()
 def train(loader, model, criterion, optimizer, epoch, C):
     batch_time = AverageMeter('Time', ':6.3f')
@@ -91,32 +91,167 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top5.update(acc5.item(), inputs.size(0))
 
         loss.backward()
-        #add random noise
-        ori_grad = model.module.conv1.weight.grad.clone()
-        var_list.append(torch.var(ori_grad, unbiased=False))
-
-        ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)
-          
-        rand_grad = torch.rand_like(ori_grad).cuda()
-
-        loss_grad = criterion_grad(ori_grad,rand_grad)
-        loss_grad.backward()
-        saved_grad = rand_grad.clone()
+        
+        #add random noise for conv1
+        ori_conv1_grad = model.module.conv1.weight.grad.clone()
+        ori_conv1_grad = torch.autograd.Variable(ori_conv1_grad, requires_grad=True)         
+        rand_conv1_grad = torch.rand_like(ori_conv1_grad).cuda()
+        loss_conv1_grad = criterion_grad(ori_conv1_grad,rand_conv1_grad)
+        loss_conv1_grad.backward()
         #Above are added codes
         
-        #add random noise for layer1 conv1
-        ori_grad = model.module.layer1[0].conv1.weight.grad.clone()
-        var_list.append(torch.var(ori_grad, unbiased=False))
-
-        ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)
-          
-        rand_grad = torch.rand_like(ori_grad).cuda()
-
-        loss_grad = criterion_grad(ori_grad,rand_grad)
-        loss_grad.backward()
-        saved_grad = rand_grad.clone()
-        #Above are added codes        
+        #add random noise for layer1[0] conv1
+        ori_layer101_grad = model.module.layer1[0].conv1.weight.grad.clone()
+        ori_layer101_grad = torch.autograd.Variable(ori_layer101_grad, requires_grad=True)         
+        rand_layer101_grad = torch.rand_like(ori_layer101_grad).cuda()
+        loss_layer101_grad = criterion_grad(ori_layer101_grad,rand_layer101_grad)
+        loss_layer101_grad.backward()
+        #Above are added codes      
+ 
+        #add random noise for layer1[0] conv2
+        ori_layer102_grad = model.module.layer1[0].conv2.weight.grad.clone()
+        ori_layer102_grad = torch.autograd.Variable(ori_layer102_grad, requires_grad=True)         
+        rand_layer102_grad = torch.rand_like(ori_layer102_grad).cuda()
+        loss_layer102_grad = criterion_grad(ori_layer102_grad,rand_layer102_grad)
+        loss_layer102_grad.backward()
+        #Above are added codes 
         
+        #add random noise for layer1[1] conv1
+        ori_layer111_grad = model.module.layer1[1].conv1.weight.grad.clone()
+        ori_layer111_grad = torch.autograd.Variable(ori_layer111_grad, requires_grad=True)         
+        rand_layer111_grad = torch.rand_like(ori_layer111_grad).cuda()
+        loss_layer111_grad = criterion_grad(ori_layer111_grad,rand_layer111_grad)
+        loss_layer111_grad.backward()
+        #Above are added codes 
+        
+        #add random noise for layer1[1] conv2
+        ori_layer112_grad = model.module.layer1[1].conv2.weight.grad.clone()
+        ori_layer112_grad = torch.autograd.Variable(ori_layer112_grad, requires_grad=True)         
+        rand_layer112_grad = torch.rand_like(ori_layer112_grad).cuda()
+        loss_layer112_grad = criterion_grad(ori_layer112_grad,rand_layer112_grad)
+        loss_layer112_grad.backward()
+        #Above are added codes 
+        
+        #add random noise for layer1[2] conv1
+        ori_layer121_grad = model.module.layer1[2].conv1.weight.grad.clone()
+        ori_layer121_grad = torch.autograd.Variable(ori_layer121_grad, requires_grad=True)         
+        rand_layer121_grad = torch.rand_like(ori_layer121_grad).cuda()
+        loss_layer121_grad = criterion_grad(ori_layer121_grad,rand_layer121_grad)
+        loss_layer121_grad.backward()
+        #Above are added codes 
+        
+        #add random noise for layer1[2] conv2
+        ori_layer122_grad = model.module.layer1[2].conv2.weight.grad.clone()
+        ori_layer122_grad = torch.autograd.Variable(ori_layer122_grad, requires_grad=True)         
+        rand_layer122_grad = torch.rand_like(ori_layer122_grad).cuda()
+        loss_layer122_grad = criterion_grad(ori_layer122_grad,rand_layer122_grad)
+        loss_layer122_grad.backward()
+        #Above are added codes 
+        
+        #add random noise for layer2[0] conv1
+        ori_layer201_grad = model.module.layer2[0].conv1.weight.grad.clone()
+        ori_layer201_grad = torch.autograd.Variable(ori_layer201_grad, requires_grad=True)         
+        rand_layer201_grad = torch.rand_like(ori_layer201_grad).cuda()
+        loss_layer201_grad = criterion_grad(ori_layer201_grad,rand_layer201_grad)
+        loss_layer201_grad.backward()
+        #Above are added codes 
+        
+        #add random noise for layer2[0] conv2
+        ori_layer202_grad = model.module.layer2[0].conv2.weight.grad.clone()
+        ori_layer202_grad = torch.autograd.Variable(ori_layer202_grad, requires_grad=True)         
+        rand_layer202_grad = torch.rand_like(ori_layer202_grad).cuda()
+        loss_layer202_grad = criterion_grad(ori_layer202_grad,rand_layer202_grad)
+        loss_layer202_grad.backward()
+        #Above are added codes 
+        
+        #add random noise for layer2[1] conv1
+        ori_layer211_grad = model.module.layer2[1].conv1.weight.grad.clone()
+        ori_layer211_grad = torch.autograd.Variable(ori_layer211_grad, requires_grad=True)         
+        rand_layer211_grad = torch.rand_like(ori_layer211_grad).cuda()
+        loss_layer211_grad = criterion_grad(ori_layer211_grad,rand_layer211_grad)
+        loss_layer211_grad.backward()
+        #Above are added codes
+        
+        #add random noise for layer2[1] conv2
+        ori_layer212_grad = model.module.layer2[1].conv2.weight.grad.clone()
+        ori_layer212_grad = torch.autograd.Variable(ori_layer212_grad, requires_grad=True)         
+        rand_layer212_grad = torch.rand_like(ori_layer212_grad).cuda()
+        loss_layer212_grad = criterion_grad(ori_layer212_grad,rand_layer212_grad)
+        loss_layer212_grad.backward()
+        #Above are added codes
+        
+        #add random noise for layer2[2] conv1
+        ori_layer221_grad = model.module.layer2[2].conv1.weight.grad.clone()
+        ori_layer221_grad = torch.autograd.Variable(ori_layer221_grad, requires_grad=True)         
+        rand_layer221_grad = torch.rand_like(ori_layer221_grad).cuda()
+        loss_layer221_grad = criterion_grad(ori_layer221_grad,rand_layer221_grad)
+        loss_layer221_grad.backward()
+        #Above are added codes
+        
+        #add random noise for layer2[2] conv2
+        ori_layer222_grad = model.module.layer2[2].conv2.weight.grad.clone()
+        ori_layer222_grad = torch.autograd.Variable(ori_layer222_grad, requires_grad=True)         
+        rand_layer222_grad = torch.rand_like(ori_layer222_grad).cuda()
+        loss_layer222_grad = criterion_grad(ori_layer222_grad,rand_layer222_grad)
+        loss_layer222_grad.backward()
+        #Above are added codes
+        
+        #add random noise for layer3[0] conv1
+        ori_layer301_grad = model.module.layer3[0].conv1.weight.grad.clone()
+        ori_layer301_grad = torch.autograd.Variable(ori_layer301_grad, requires_grad=True)         
+        rand_layer301_grad = torch.rand_like(ori_layer301_grad).cuda()
+        loss_layer301_grad = criterion_grad(ori_layer301_grad,rand_layer301_grad)
+        loss_layer301_grad.backward()
+        #Above are added codes
+        
+        #add random noise for layer3[0] conv2
+        ori_layer302_grad = model.module.layer3[0].conv2.weight.grad.clone()
+        ori_layer302_grad = torch.autograd.Variable(ori_layer302_grad, requires_grad=True)         
+        rand_layer302_grad = torch.rand_like(ori_layer302_grad).cuda()
+        loss_layer302_grad = criterion_grad(ori_layer302_grad,rand_layer302_grad)
+        loss_layer302_grad.backward()
+        #Above are added codes
+        
+        #add random noise for layer3[1] conv1
+        ori_layer311_grad = model.module.layer3[1].conv1.weight.grad.clone()
+        ori_layer311_grad = torch.autograd.Variable(ori_layer311_grad, requires_grad=True)         
+        rand_layer311_grad = torch.rand_like(ori_layer311_grad).cuda()
+        loss_layer311_grad = criterion_grad(ori_layer311_grad,rand_layer311_grad)
+        loss_layer311_grad.backward()
+        #Above are added codes
+        
+        #add random noise for layer3[1] conv2
+        ori_layer312_grad = model.module.layer3[1].conv2.weight.grad.clone()
+        ori_layer312_grad = torch.autograd.Variable(ori_layer312_grad, requires_grad=True)         
+        rand_layer312_grad = torch.rand_like(ori_layer312_grad).cuda()
+        loss_layer312_grad = criterion_grad(ori_layer312_grad,rand_layer312_grad)
+        loss_layer312_grad.backward()
+        #Above are added codes
+        
+        #add random noise for layer3[2] conv1
+        ori_layer321_grad = model.module.layer3[2].conv1.weight.grad.clone()
+        ori_layer321_grad = torch.autograd.Variable(ori_layer321_grad, requires_grad=True)         
+        rand_layer321_grad = torch.rand_like(ori_layer321_grad).cuda()
+        loss_layer321_grad = criterion_grad(ori_layer321_grad,rand_layer321_grad)
+        loss_layer321_grad.backward()
+        #Above are added codes
+        
+        #add random noise for layer3[2] conv2
+        ori_layer322_grad = model.module.layer3[2].conv2.weight.grad.clone()
+        ori_layer322_grad = torch.autograd.Variable(ori_layer322_grad, requires_grad=True)         
+        rand_layer322_grad = torch.rand_like(ori_layer322_grad).cuda()
+        loss_layer322_grad = criterion_grad(ori_layer322_grad,rand_layer322_grad)
+        loss_layer322_grad.backward()
+        #Above are added codes
+        
+        #add random noise for linear
+        ori_linear_grad = model.module.linear.weight.grad.clone()
+        ori_linear_grad = torch.autograd.Variable(ori_linear_grad, requires_grad=True)         
+        rand_linear_grad = torch.rand_like(ori_linear_grad).cuda()
+        loss_linear_grad = criterion_grad(ori_linear_grad,rand_linear_grad)
+        loss_linear_grad.backward()
+        #Above are added codes
+
         optimizer.step()
 
         batch_time.update(time.time() - end)
