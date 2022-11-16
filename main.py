@@ -521,7 +521,7 @@ if __name__ == "__main__":
     
     
     #fig = plt.figure(figsize=(16,8)
-    plt.subplot(10,2,6))
+    plt.subplot(10,2,6)
     plt.plot(var_layer121_list)
     plt.subtitle('layer121')
     
