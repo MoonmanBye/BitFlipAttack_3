@@ -466,7 +466,7 @@ if __name__ == "__main__":
         var_layer301_list[i] = var_layer301_list[i].cpu().data
     
     for i in range(len(var_layer302_list)):
-        var_layer301_list[i] = var_layer302_list[i].cpu().data
+        var_layer302_list[i] = var_layer302_list[i].cpu().data
     
     for i in range(len(var_layer311_list)):
         var_layer311_list[i] = var_layer311_list[i].cpu().data
