@@ -21,7 +21,7 @@ parser.add_argument('--ocm', action='store_true', help='output layer coding with
 parser.add_argument('--output_act', type=str, default='linear', help='output act. (only linear and tanh is supported)')
 parser.add_argument('--code_length', '-cl', default=16, type=int, help='length of codewords')
 parser.add_argument('--outdir', type=str, default='results/', help='folder to save model and training log')
-parser.add_argument('--epochs', '-e', default=160, type=int, metavar='N', help='number of total epochs to run')
+parser.add_argument('--epochs', '-e', default=2, type=int, metavar='N', help='number of total epochs to run') #default from 160
 parser.add_argument('--batch', '-b', default=128, type=int, metavar='N', help='Mini-batch size (default: 128)')
 parser.add_argument('--opt', type=str, default='sgd', help='sgd or adam optimizer')
 parser.add_argument('--lr', default=0.1, type=float, help='initial learning rate')
