@@ -493,121 +493,121 @@ if __name__ == "__main__":
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,1)
     plt.plot(var_conv1_list)
-    plt.subtitle('conv1 layer')
+    plt.title('conv1 layer')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,2)
     plt.plot(var_layer101_list)
-    plt.subtitle('layer101')
+    plt.title('layer101')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,3)
     plt.plot(var_layer102_list)
-    plt.subtitle('layer102')
+    plt.title('layer102')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,4)
     plt.plot(var_layer111_list)
-    plt.subtitle('layer111')
+    plt.title('layer111')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,5)
     plt.plot(var_layer112_list)
-    plt.subtitle('layer112')
+    plt.title('layer112')
     
     
     #fig = plt.figure(figsize=(16,8)
     plt.subplot(10,2,6)
     plt.plot(var_layer121_list)
-    plt.subtitle('layer121')
+    plt.title('layer121')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,7)
     plt.plot(var_layer122_list)
-    plt.subtitle('layer122')
+    plt.title('layer122')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,8)
     plt.plot(var_layer201_list)
-    plt.subtitle('layer201')
+    plt.title('layer201')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,9)
     plt.plot(var_layer202_list)
-    plt.subtitle('layer202')
+    plt.title('layer202')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,10)
     plt.plot(var_layer211_list)
-    plt.subtitle('layer211')
+    plt.title('layer211')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,11)
     plt.plot(var_layer212_list)
-    plt.subtitle('layer212')
+    plt.title('layer212')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,12)
     plt.plot(var_layer221_list)
-    plt.subtitle('layer221')
+    plt.title('layer221')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,13)
     plt.plot(var_layer222_list)
-    plt.subtitle('layer222')
+    plt.title('layer222')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,14)
     plt.plot(var_layer301_list)
-    plt.subtitle('layer301')
+    plt.title('layer301')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,15)
     plt.plot(var_layer302_list)
-    plt.subtitle('layer302')
+    plt.title('layer302')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,16)
     plt.plot(var_layer311_list)
-    plt.subtitle('layer311')
+    plt.title('layer311')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,17)
     plt.plot(var_layer312_list)
-    plt.subtitle('layer312')
+    plt.title('layer312')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,18)
     plt.plot(var_layer321_list)
-    plt.subtitle('layer321')
+    plt.title('layer321')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,19)
     plt.plot(var_layer322_list)
-    plt.subtitle('layer322')
+    plt.title('layer322')
     
     
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,20)
     plt.plot(var_linear_list)
-    plt.subtitle('layerlinear')
+    plt.title('layerlinear')
    
     
     
