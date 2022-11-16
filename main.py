@@ -55,28 +55,9 @@ else:
     device = torch.device('cuda')
     print('Using gpu: ' + args.gpu)
 
-var_conv1_list=[]
-var_layer101_list=[]
-var_layer102_list=[]
-var_layer111_list=[]
-var_layer112_list=[]
-var_layer121_list=[]
-var_layer122_list=[]
-var_layer201_list=[]
-var_layer202_list=[]
-var_layer211_list=[]
-var_layer212_list=[]
-var_layer221_list=[]
-var_layer222_list=[]
-var_layer301_list=[]
-var_layer302_list=[]
-var_layer311_list=[]
-var_layer312_list=[]
-var_layer321_list=[]
-var_layer322_list=[]
-var_linear_list=[]
 
-criterion_grad = nn.MSELoss()
+
+
 def train(loader, model, criterion, optimizer, epoch, C):
     batch_time = AverageMeter('Time', ':6.3f')
     data_time = AverageMeter('Data', ':6.3f')
@@ -348,7 +329,33 @@ def main():
     # Load dataset and model architecture
     DATASET = datasets.__dict__[args.dataset](args)
     train_loader, test_loader = DATASET.loaders()
-
+   
+    #Some parameters
+    var_conv1_list=[]
+    var_layer101_list=[]
+    var_layer102_list=[]
+    var_layer111_list=[]
+    var_layer112_list=[]
+    var_layer121_list=[]
+    var_layer122_list=[]
+    var_layer201_list=[]
+    var_layer202_list=[]
+    var_layer211_list=[]
+    var_layer212_list=[]
+    var_layer221_list=[]
+    var_layer222_list=[]
+    var_layer301_list=[]
+    var_layer302_list=[]
+    var_layer311_list=[]
+    var_layer312_list=[]
+    var_layer321_list=[]
+    var_layer322_list=[]
+    var_linear_list=[]
+    
+    #needed function
+    criterion_grad = nn.MSELoss()
+    
+    #Basic function
     if args.ocm:
         n_output = args.code_length
         criterion = L1Loss()
