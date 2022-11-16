@@ -425,7 +425,7 @@ if __name__ == "__main__":
     
     #added for gradient variance check
     for i in range(len(var_conv1_list)):
-    var_conv1_list[i] = var_conv1_list[i].cpu().data
+        var_conv1_list[i] = var_conv1_list[i].cpu().data
     fig = plt.figure(figsize=(16,8))
     plt.plot(var_conv1_list)
     plt.title('gradient variance for conv1 layer')
