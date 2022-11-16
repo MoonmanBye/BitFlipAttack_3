@@ -429,3 +429,4 @@ if __name__ == "__main__":
     fig = plt.figure(figsize=(16,8))
     plt.plot(var_conv1_list)
     plt.title('gradient variance for conv1 layer')
+    plt.show()
