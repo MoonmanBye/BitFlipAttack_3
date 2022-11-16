@@ -8,6 +8,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn import CrossEntropyLoss, L1Loss
 from torch.optim import SGD, Adam
+import matplotlib.pyplot as plt
 
 
 parser = argparse.ArgumentParser(description='Improving stealthy BFA robustness via output code matching')
