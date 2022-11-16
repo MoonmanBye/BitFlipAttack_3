@@ -423,143 +423,187 @@ if __name__ == "__main__":
     
     main()
     
-    fig = plt.figure(figsize=(16,40))
-    #added for gradient variance check
     for i in range(len(var_conv1_list)):
         var_conv1_list[i] = var_conv1_list[i].cpu().data
+    
+    for i in range(len(var_layer101_list)):
+        var_layer101_list[i] = var_layer101_list[i].cpu().data
+    
+    for i in range(len(var_layer102_list)):
+        var_layer102_list[i] = var_layer102_list[i].cpu().data
+    
+    for i in range(len(var_layer111_list)):
+        var_layer111_list[i] = var_layer111_list[i].cpu().data
+    
+    for i in range(len(var_layer112_list)):
+        var_layer112_list[i] = var_layer112_list[i].cpu().data
+        
+    for i in range(len(var_layer121_list)):
+        var_layer121_list[i] = var_layer121_list[i].cpu().data
+    
+    for i in range(len(var_layer122_list)):
+        var_layer122_list[i] = var_layer122_list[i].cpu().data
+    
+    for i in range(len(var_layer201_list)):
+        var_layer201_list[i] = var_layer201_list[i].cpu().data
+    
+    for i in range(len(var_layer202_list)):
+        var_layer202_list[i] = var_layer202_list[i].cpu().data
+        
+    for i in range(len(var_layer211_list)):
+        var_layer211_list[i] = var_layer211_list[i].cpu().data
+    
+    for i in range(len(var_layer212_list)):
+        var_layer212_list[i] = var_layer212_list[i].cpu().data
+    
+    for i in range(len(var_layer221_list)):
+        var_layer221_list[i] = var_layer221_list[i].cpu().data
+    
+    for i in range(len(var_layer222_list)):
+        var_layer222_list[i] = var_layer222_list[i].cpu().data
+    
+    for i in range(len(var_layer301_list)):
+        var_layer301_list[i] = var_layer301_list[i].cpu().data
+    
+    for i in range(len(var_layer302_list)):
+        var_layer301_list[i] = var_layer302_list[i].cpu().data
+    
+    for i in range(len(var_layer311_list)):
+        var_layer311_list[i] = var_layer311_list[i].cpu().data
+    
+    for i in range(len(var_layer312_list)):
+        var_layer312_list[i] = var_layer312_list[i].cpu().data
+    
+    for i in range(len(var_layer321_list)):
+        var_layer321_list[i] = var_layer321_list[i].cpu().data
+    
+    for i in range(len(var_layer322_list)):
+        var_layer322_list[i] = var_layer322_list[i].cpu().data
+    
+    for i in range(len(var_linear_list)):
+        var_linear_list[i] = var_linear_list[i].cpu().data
+    
+    
+    
+    
+    
+    fig = plt.figure(figsize=(16,40))
+    #added for gradient variance check
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,1)
     plt.plot(var_conv1_list)
     plt.subtitle('conv1 layer')
     
-    for i in range(len(var_layer101_list)):
-        var_layer101_list[i] = var_layer101_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,2)
     plt.plot(var_layer101_list)
     plt.subtitle('layer101')
     
-    for i in range(len(var_layer102_list)):
-        var_layer102_list[i] = var_layer102_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,3)
     plt.plot(var_layer102_list)
     plt.subtitle('layer102')
     
-    for i in range(len(var_layer111_list)):
-        var_layer111_list[i] = var_layer111_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,4)
     plt.plot(var_layer111_list)
     plt.subtitle('layer111')
     
-    for i in range(len(var_layer112_list)):
-        var_layer112_list[i] = var_layer112_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,5)
     plt.plot(var_layer112_list)
     plt.subtitle('layer112')
     
-    for i in range(len(var_layer121_list)):
-        var_layer121_list[i] = var_layer121_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8)
     plt.subplot(10,2,6))
     plt.plot(var_layer121_list)
     plt.subtitle('layer121')
     
-    for i in range(len(var_layer122_list)):
-        var_layer122_list[i] = var_layer122_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,7)
     plt.plot(var_layer122_list)
     plt.subtitle('layer122')
     
-    for i in range(len(var_layer201_list)):
-        var_layer201_list[i] = var_layer201_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,8)
     plt.plot(var_layer201_list)
     plt.subtitle('layer201')
     
-    for i in range(len(var_layer202_list)):
-        var_layer202_list[i] = var_layer202_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,9)
     plt.plot(var_layer202_list)
     plt.subtitle('layer202')
     
-    for i in range(len(var_layer211_list)):
-        var_layer211_list[i] = var_layer211_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,10)
     plt.plot(var_layer211_list)
     plt.subtitle('layer211')
     
-    for i in range(len(var_layer212_list)):
-        var_layer212_list[i] = var_layer212_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,11)
     plt.plot(var_layer212_list)
     plt.subtitle('layer212')
     
-    for i in range(len(var_layer221_list)):
-        var_layer221_list[i] = var_layer221_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,12)
     plt.plot(var_layer221_list)
     plt.subtitle('layer221')
     
-    for i in range(len(var_layer222_list)):
-        var_layer222_list[i] = var_layer222_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,13)
     plt.plot(var_layer222_list)
     plt.subtitle('layer222')
     
-    for i in range(len(var_layer301_list)):
-        var_layer301_list[i] = var_layer301_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,14)
     plt.plot(var_layer301_list)
     plt.subtitle('layer301')
     
-    for i in range(len(var_layer302_list)):
-        var_layer301_list[i] = var_layer302_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,15)
     plt.plot(var_layer302_list)
     plt.subtitle('layer302')
     
-    for i in range(len(var_layer311_list)):
-        var_layer311_list[i] = var_layer311_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,16)
     plt.plot(var_layer311_list)
     plt.subtitle('layer311')
     
-    for i in range(len(var_layer312_list)):
-        var_layer312_list[i] = var_layer312_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,17)
     plt.plot(var_layer312_list)
     plt.subtitle('layer312')
     
-    for i in range(len(var_layer321_list)):
-        var_layer321_list[i] = var_layer321_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,18)
     plt.plot(var_layer321_list)
     plt.subtitle('layer321')
     
-    for i in range(len(var_layer322_list)):
-        var_layer322_list[i] = var_layer322_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,19)
     plt.plot(var_layer322_list)
     plt.subtitle('layer322')
     
-    for i in range(len(var_linear_list)):
-        var_linear_list[i] = var_linear_list[i].cpu().data
+    
     #fig = plt.figure(figsize=(16,8))
     plt.subplot(10,2,20)
     plt.plot(var_linear_list)
