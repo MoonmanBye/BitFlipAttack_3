@@ -281,6 +281,8 @@ def train(loader, model, criterion, optimizer, epoch, C):
 
         if i % args.print_freq == 0:
             progress.display(i)
+    
+    print("conv1.type", model.state_dict()['module.conv1.weight'].dtype)
 
     return losses.avg, top1.avg
 
@@ -422,8 +424,7 @@ if __name__ == "__main__":
     criterion_grad = nn.MSELoss()
     
     main()
-    
-    print("conv1.type", model.state_dict()['fc1.weight'].dtype)
+       
     
     for i in range(len(var_conv1_list)):
         var_conv1_list[i] = var_conv1_list[i].cpu().data
