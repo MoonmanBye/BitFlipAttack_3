@@ -423,6 +423,8 @@ if __name__ == "__main__":
     
     main()
     
+    print("conv1.type", model.state_dict()['fc1.weight'].dtype)
+    
     for i in range(len(var_conv1_list)):
         var_conv1_list[i] = var_conv1_list[i].cpu().data
     
