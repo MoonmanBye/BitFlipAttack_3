@@ -72,7 +72,7 @@ def TransferToCpu(var_list):
          va_list[i] = va_list[i].cpu().data
     return var_list
 
-def PlotVar()
+def PlotVar():
     fig = plt.figure(figsize=(8,20))
     #added for gradient variance check
     #fig = plt.figure(figsize=(16,8))
@@ -309,6 +309,7 @@ if __name__ == "__main__":
     var_conv3_list = TransferToCpu(var_conv3_list)
     var_fc1_list = TransferToCpu(var_fc1_list)
     var_fc2_list = TransferToCpu(var_fc2_list)
+    PlotVar()
 
     
 #      for i in range(len(var_conv1_list)):
