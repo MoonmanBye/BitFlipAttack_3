@@ -16,7 +16,7 @@ class DownsampleA(nn.Module):
 
 class SimpleNet(nn.module):
     def __init__(self, n_bits=8):
-        super(CifarResNet_mid, self).__init__()
+        super(SimpleNet, self).__init__()
         self.n_bits = n_bits
 
         self.conv1 = quan_Conv2d(3, 16, kernel_size=3, stride=1, padding=1, bias=False, n_bits=self.n_bits)
