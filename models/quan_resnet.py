@@ -15,16 +15,17 @@ class DownsampleA(nn.Module):
         return torch.cat((x, x.mul(0)), 1)
 
 class SimpleNet(nn.Module):
-    def __init__(self, n_bits=8):
+    def __init__(self, num_output=10, n_bits=8):
         super(SimpleNet, self).__init__()
         self.n_bits = n_bits
+        self.num_output = num_output
 
         self.conv1 = quan_Conv2d(3, 16, kernel_size=3, stride=1, padding=1, bias=False, n_bits=self.n_bits)
         self.conv2 = quan_Conv2d(16, 32, kernel_size=3, stride=1, padding=1, bias=False, n_bits=self.n_bits)
         self.conv3 = quan_Conv2d(32, 64, kernel_size=3, stride=1, padding=1, bias=False, n_bits=self.n_bits)
         self.pool = nn.MaxPool2d(2, 2)
         self.fc1 = quan_Linear(4*4*64, 500, bias=False, n_bits=self.n_bits)
-        self.fc2 = quan_Linear(500, 10, bias=False, n_bits=self.n_bits)
+        self.fc2 = quan_Linear(500, num_output, bias=False, n_bits=self.n_bits)
         self.dropout = nn.Dropout(0.25)
 
         # Initialize weights
@@ -320,6 +321,6 @@ def resnet50_quan_mid(num_output=1000, n_bits=8):
     model = ResNet_mid(Bottleneck, [3, 4, 6, 3], num_output, n_bits)
     return model
 
-def SmallNet(n_bits=8):
+def SmallNet(num_output=10, n_bits=8):
     model = SimpleNet(n_bits)
     return model
