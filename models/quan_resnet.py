@@ -1,7 +1,7 @@
 import math
 from models.quantization import *
 
-__all__ = ['CifarResNet', 'ResNet', 'resnet20_quan', 'resnet50_quan', 'resnet20_quan_mid', 'resnet50_quan_mid']
+__all__ = ['CifarResNet', 'ResNet', 'resnet20_quan', 'resnet50_quan', 'resnet20_quan_mid', 'resnet50_quan_mid','SmallNet']
 
 
 class DownsampleA(nn.Module):
