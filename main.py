@@ -55,7 +55,7 @@ else:
     device = torch.device('cuda')
     print('Using gpu: ' + args.gpu)
 
-def generateNoise(layer_weight)：
+def generateNoise(layer_weight):
     #ori_conv1_grad = model.module.conv1.weight.grad.clone()
     ori_grad =layer_weight.clone()
     var_grad=(torch.var(ori_grad, unbiased=False))
