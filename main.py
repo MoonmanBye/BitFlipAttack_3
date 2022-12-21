@@ -15,13 +15,14 @@ parser = argparse.ArgumentParser(description='Improving stealthy BFA robustness 
 parser.add_argument('--data_dir', type=str, default='data/')
 parser.add_argument('--dataset', type=str, default='CIFAR10', help='dataset for processing')
 parser.add_argument('--num_classes', '-c', default=10, type=int, help='number of classes in the dataset')
-parser.add_argument('--arch', '-a', type=str, default='resnet20_quan', help='model architecture')
+#parser.add_argument('--arch', '-a', type=str, default='resnet20_quan', help='model architecture')
+parser.add_argument('--arch', '-a', type=str, default='SmallNet', help='model architecture')
 parser.add_argument('--bits', type=int, default=8, help='quantization bits')
 parser.add_argument('--ocm', action='store_true', help='output layer coding with bit strings')
 parser.add_argument('--output_act', type=str, default='linear', help='output act. (only linear and tanh is supported)')
 parser.add_argument('--code_length', '-cl', default=16, type=int, help='length of codewords')
 parser.add_argument('--outdir', type=str, default='results/', help='folder to save model and training log')
-parser.add_argument('--epochs', '-e', default=50, type=int, metavar='N', help='number of total epochs to run') #default from 160
+parser.add_argument('--epochs', '-e', default=5, type=int, metavar='N', help='number of total epochs to run') #default from 160
 parser.add_argument('--batch', '-b', default=128, type=int, metavar='N', help='Mini-batch size (default: 128)')
 parser.add_argument('--opt', type=str, default='sgd', help='sgd or adam optimizer')
 parser.add_argument('--lr', default=0.1, type=float, help='initial learning rate')
@@ -64,7 +65,38 @@ def generateNoise(layer_grad):
     rand_grad = torch.rand_like(ori_grad).cuda()
     loss_grad = criterion_grad(ori_grad,rand_grad)
     loss_grad.backward()
-    return var_grad    
+    return var_grad
+
+def TransferToCpu(var_list):
+    for i in range(len(var_conv1_list)):
+         va_list[i] = va_list[i].cpu().data
+    return var_list
+
+def PlotVar()
+    fig = plt.figure(figsize=(8,20))
+    #added for gradient variance check
+    #fig = plt.figure(figsize=(16,8))
+    plt.subplot(5,1,1)
+    plt.plot(var_conv1_list)
+    plt.title('conv1 layer')
+    
+    plt.subplot(5,1,2)
+    plt.plot(var_conv2_list)
+    plt.title('conv2 layer')
+    
+    plt.subplot(5,1,3)
+    plt.plot(var_conv3_list)
+    plt.title('conv3 layer')
+    
+    plt.subplot(5,1,4)
+    plt.plot(var_fc1_list)
+    plt.title('fc1 layer')
+    
+    plt.subplot(5,1,5)
+    plt.plot(var_fc2_list)
+    plt.title('fc2 layer')
+    plt.show()
+
 
 def train(loader, model, criterion, optimizer, epoch, C):
     batch_time = AverageMeter('Time', ':6.3f')
@@ -105,6 +137,14 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #Add Noise Here
         var_grad_conv1 = generateNoise(model.module.conv1.weight.grad)
         var_conv1_list.append(var_grad_conv1)
+        var_grad_conv2 = generateNoise(model.module.conv2.weight.grad)
+        var_conv2_list.append(var_grad_conv2)
+        var_grad_conv3 = generateNoise(model.module.conv3.weight.grad)
+        var_conv3_list.append(var_grad_conv3)
+        var_grad_fc1 = generateNoise(model.module.fc1.weight.grad)
+        var_fc1_list.append(var_grad_fc1)
+        var_grad_fc2 = generateNoise(model.module.fc2.weight.grad)
+        var_fc2_list.append(var_grad_fc2)
         
         #Reverese Grad Here
 
@@ -234,6 +274,11 @@ if __name__ == "__main__":
        
     #Some parameters
     var_conv1_list=[]
+    var_conv2_list=[]
+    var_conv3_list=[]
+    var_fc1_list=[]
+    var_fc2_list=[]
+    
     var_layer101_list=[]
     var_layer102_list=[]
     var_layer111_list=[]
@@ -259,9 +304,16 @@ if __name__ == "__main__":
     
     main()
        
+    var_conv1_list = TransferToCpu(var_conv1_list)
+    var_conv2_list = TransferToCpu(var_conv2_list)
+    var_conv3_list = TransferToCpu(var_conv3_list)
+    var_fc1_list = TransferToCpu(var_fc1_list)
+    var_fc2_list = TransferToCpu(var_fc2_list)
+
     
-#     for i in range(len(var_conv1_list)):
-#         var_conv1_list[i] = var_conv1_list[i].cpu().data
+#      for i in range(len(var_conv1_list)):
+#          var_conv1_list[i] = var_conv1_list[i].cpu().data
+     
     
 #     for i in range(len(var_layer101_list)):
 #         var_layer101_list[i] = var_layer101_list[i].cpu().data
@@ -324,13 +376,13 @@ if __name__ == "__main__":
     
     
     
-#     fig = plt.figure(figsize=(16,40))
-#     #added for gradient variance check
+#      fig = plt.figure(figsize=(16,40))
+#      #added for gradient variance check
     
-#     #fig = plt.figure(figsize=(16,8))
-#     plt.subplot(10,2,1)
-#     plt.plot(var_conv1_list)
-#     plt.title('conv1 layer')
+#      #fig = plt.figure(figsize=(16,8))
+#      plt.subplot(10,2,1)
+#      plt.plot(var_conv1_list)
+#      plt.title('conv1 layer')
     
     
 #     #fig = plt.figure(figsize=(16,8))
