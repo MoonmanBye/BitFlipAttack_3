@@ -54,10 +54,11 @@ if args.gpu == "-1":
 else:
     device = torch.device('cuda')
     print('Using gpu: ' + args.gpu)
-
-def generateNoise(layer_weight):
+    
+    
+def generateNoise(layer_grad):
     #ori_conv1_grad = model.module.conv1.weight.grad.clone()
-    ori_grad =layer_weight.clone()
+    ori_grad =layer_grad.clone()
     var_grad=(torch.var(ori_grad, unbiased=False))
     ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
     rand_grad = torch.rand_like(ori_grad).cuda()
@@ -102,6 +103,9 @@ def train(loader, model, criterion, optimizer, epoch, C):
         loss.backward()
         
         #Add Noise Here
+        var_grad_conv1 = generateNoise(model.module.conv1.weight.grad)
+        var_conv1_list.append(var_grad_conv1)
+        
         #Reverese Grad Here
 
         optimizer.step()
