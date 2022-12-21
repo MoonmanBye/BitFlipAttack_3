@@ -55,8 +55,15 @@ else:
     device = torch.device('cuda')
     print('Using gpu: ' + args.gpu)
 
-
-
+def generateNoise(layer_weight)
+    #ori_conv1_grad = model.module.conv1.weight.grad.clone()
+    ori_grad =layer_weight.clone()
+    var_grad=(torch.var(ori_grad, unbiased=False))
+    ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
+    rand_grad = torch.rand_like(ori_grad).cuda()
+    loss_grad = criterion_grad(ori_grad,rand_grad)
+    loss_grad.backward()
+    return var_grad    
 
 def train(loader, model, criterion, optimizer, epoch, C):
     batch_time = AverageMeter('Time', ':6.3f')
@@ -94,185 +101,8 @@ def train(loader, model, criterion, optimizer, epoch, C):
 
         loss.backward()
         
-        #add random noise for conv1
-        ori_conv1_grad = model.module.conv1.weight.grad.clone()
-        var_conv1_list.append(torch.var(ori_conv1_grad, unbiased=False))
-        ori_conv1_grad = torch.autograd.Variable(ori_conv1_grad, requires_grad=True)         
-        rand_conv1_grad = torch.rand_like(ori_conv1_grad).cuda()
-        loss_conv1_grad = criterion_grad(ori_conv1_grad,rand_conv1_grad)
-        loss_conv1_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer1[0] conv1
-        ori_layer101_grad = model.module.layer1[0].conv1.weight.grad.clone()
-        var_layer101_list.append(torch.var(ori_layer101_grad, unbiased=False))
-        ori_layer101_grad = torch.autograd.Variable(ori_layer101_grad, requires_grad=True)         
-        rand_layer101_grad = torch.rand_like(ori_layer101_grad).cuda()
-        loss_layer101_grad = criterion_grad(ori_layer101_grad,rand_layer101_grad)
-        loss_layer101_grad.backward()
-        #Above are added codes      
- 
-        #add random noise for layer1[0] conv2
-        ori_layer102_grad = model.module.layer1[0].conv2.weight.grad.clone()
-        var_layer102_list.append(torch.var(ori_layer102_grad, unbiased=False))
-        ori_layer102_grad = torch.autograd.Variable(ori_layer102_grad, requires_grad=True)         
-        rand_layer102_grad = torch.rand_like(ori_layer102_grad).cuda()
-        loss_layer102_grad = criterion_grad(ori_layer102_grad,rand_layer102_grad)
-        loss_layer102_grad.backward()
-        #Above are added codes 
-        
-        #add random noise for layer1[1] conv1
-        ori_layer111_grad = model.module.layer1[1].conv1.weight.grad.clone()
-        var_layer111_list.append(torch.var(ori_layer111_grad, unbiased=False))
-        ori_layer111_grad = torch.autograd.Variable(ori_layer111_grad, requires_grad=True)         
-        rand_layer111_grad = torch.rand_like(ori_layer111_grad).cuda()
-        loss_layer111_grad = criterion_grad(ori_layer111_grad,rand_layer111_grad)
-        loss_layer111_grad.backward()
-        #Above are added codes 
-        
-        #add random noise for layer1[1] conv2
-        ori_layer112_grad = model.module.layer1[1].conv2.weight.grad.clone()
-        var_layer112_list.append(torch.var(ori_layer112_grad, unbiased=False))
-        ori_layer112_grad = torch.autograd.Variable(ori_layer112_grad, requires_grad=True)         
-        rand_layer112_grad = torch.rand_like(ori_layer112_grad).cuda()
-        loss_layer112_grad = criterion_grad(ori_layer112_grad,rand_layer112_grad)
-        loss_layer112_grad.backward()
-        #Above are added codes 
-        
-        #add random noise for layer1[2] conv1
-        ori_layer121_grad = model.module.layer1[2].conv1.weight.grad.clone()
-        var_layer121_list.append(torch.var(ori_layer121_grad, unbiased=False))
-        ori_layer121_grad = torch.autograd.Variable(ori_layer121_grad, requires_grad=True)         
-        rand_layer121_grad = torch.rand_like(ori_layer121_grad).cuda()
-        loss_layer121_grad = criterion_grad(ori_layer121_grad,rand_layer121_grad)
-        loss_layer121_grad.backward()
-        #Above are added codes 
-        
-        #add random noise for layer1[2] conv2
-        ori_layer122_grad = model.module.layer1[2].conv2.weight.grad.clone()
-        var_layer122_list.append(torch.var(ori_layer122_grad, unbiased=False))
-        ori_layer122_grad = torch.autograd.Variable(ori_layer122_grad, requires_grad=True)         
-        rand_layer122_grad = torch.rand_like(ori_layer122_grad).cuda()
-        loss_layer122_grad = criterion_grad(ori_layer122_grad,rand_layer122_grad)
-        loss_layer122_grad.backward()
-        #Above are added codes 
-        
-        #add random noise for layer2[0] conv1
-        ori_layer201_grad = model.module.layer2[0].conv1.weight.grad.clone()
-        var_layer201_list.append(torch.var(ori_layer201_grad, unbiased=False))
-        ori_layer201_grad = torch.autograd.Variable(ori_layer201_grad, requires_grad=True)         
-        rand_layer201_grad = torch.rand_like(ori_layer201_grad).cuda()
-        loss_layer201_grad = criterion_grad(ori_layer201_grad,rand_layer201_grad)
-        loss_layer201_grad.backward()
-        #Above are added codes 
-        
-        #add random noise for layer2[0] conv2
-        ori_layer202_grad = model.module.layer2[0].conv2.weight.grad.clone()
-        var_layer202_list.append(torch.var(ori_layer202_grad, unbiased=False))
-        ori_layer202_grad = torch.autograd.Variable(ori_layer202_grad, requires_grad=True)         
-        rand_layer202_grad = torch.rand_like(ori_layer202_grad).cuda()
-        loss_layer202_grad = criterion_grad(ori_layer202_grad,rand_layer202_grad)
-        loss_layer202_grad.backward()
-        #Above are added codes 
-        
-        #add random noise for layer2[1] conv1
-        ori_layer211_grad = model.module.layer2[1].conv1.weight.grad.clone()
-        var_layer211_list.append(torch.var(ori_layer211_grad, unbiased=False))
-        ori_layer211_grad = torch.autograd.Variable(ori_layer211_grad, requires_grad=True)         
-        rand_layer211_grad = torch.rand_like(ori_layer211_grad).cuda()
-        loss_layer211_grad = criterion_grad(ori_layer211_grad,rand_layer211_grad)
-        loss_layer211_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer2[1] conv2
-        ori_layer212_grad = model.module.layer2[1].conv2.weight.grad.clone()
-        var_layer212_list.append(torch.var(ori_layer212_grad, unbiased=False))
-        ori_layer212_grad = torch.autograd.Variable(ori_layer212_grad, requires_grad=True)         
-        rand_layer212_grad = torch.rand_like(ori_layer212_grad).cuda()
-        loss_layer212_grad = criterion_grad(ori_layer212_grad,rand_layer212_grad)
-        loss_layer212_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer2[2] conv1
-        ori_layer221_grad = model.module.layer2[2].conv1.weight.grad.clone()
-        var_layer221_list.append(torch.var(ori_layer221_grad, unbiased=False))
-        ori_layer221_grad = torch.autograd.Variable(ori_layer221_grad, requires_grad=True)         
-        rand_layer221_grad = torch.rand_like(ori_layer221_grad).cuda()
-        loss_layer221_grad = criterion_grad(ori_layer221_grad,rand_layer221_grad)
-        loss_layer221_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer2[2] conv2
-        ori_layer222_grad = model.module.layer2[2].conv2.weight.grad.clone()
-        var_layer222_list.append(torch.var(ori_layer222_grad, unbiased=False))
-        ori_layer222_grad = torch.autograd.Variable(ori_layer222_grad, requires_grad=True)         
-        rand_layer222_grad = torch.rand_like(ori_layer222_grad).cuda()
-        loss_layer222_grad = criterion_grad(ori_layer222_grad,rand_layer222_grad)
-        loss_layer222_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer3[0] conv1
-        ori_layer301_grad = model.module.layer3[0].conv1.weight.grad.clone()
-        var_layer301_list.append(torch.var(ori_layer301_grad, unbiased=False))
-        ori_layer301_grad = torch.autograd.Variable(ori_layer301_grad, requires_grad=True)         
-        rand_layer301_grad = torch.rand_like(ori_layer301_grad).cuda()
-        loss_layer301_grad = criterion_grad(ori_layer301_grad,rand_layer301_grad)
-        loss_layer301_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer3[0] conv2
-        ori_layer302_grad = model.module.layer3[0].conv2.weight.grad.clone()
-        var_layer302_list.append(torch.var(ori_layer302_grad, unbiased=False))
-        ori_layer302_grad = torch.autograd.Variable(ori_layer302_grad, requires_grad=True)         
-        rand_layer302_grad = torch.rand_like(ori_layer302_grad).cuda()
-        loss_layer302_grad = criterion_grad(ori_layer302_grad,rand_layer302_grad)
-        loss_layer302_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer3[1] conv1
-        ori_layer311_grad = model.module.layer3[1].conv1.weight.grad.clone()
-        var_layer311_list.append(torch.var(ori_layer311_grad, unbiased=False))
-        ori_layer311_grad = torch.autograd.Variable(ori_layer311_grad, requires_grad=True)         
-        rand_layer311_grad = torch.rand_like(ori_layer311_grad).cuda()
-        loss_layer311_grad = criterion_grad(ori_layer311_grad,rand_layer311_grad)
-        loss_layer311_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer3[1] conv2
-        ori_layer312_grad = model.module.layer3[1].conv2.weight.grad.clone()
-        var_layer312_list.append(torch.var(ori_layer312_grad, unbiased=False))
-        ori_layer312_grad = torch.autograd.Variable(ori_layer312_grad, requires_grad=True)         
-        rand_layer312_grad = torch.rand_like(ori_layer312_grad).cuda()
-        loss_layer312_grad = criterion_grad(ori_layer312_grad,rand_layer312_grad)
-        loss_layer312_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer3[2] conv1
-        ori_layer321_grad = model.module.layer3[2].conv1.weight.grad.clone()
-        var_layer321_list.append(torch.var(ori_layer321_grad, unbiased=False))
-        ori_layer321_grad = torch.autograd.Variable(ori_layer321_grad, requires_grad=True)         
-        rand_layer321_grad = torch.rand_like(ori_layer321_grad).cuda()
-        loss_layer321_grad = criterion_grad(ori_layer321_grad,rand_layer321_grad)
-        loss_layer321_grad.backward()
-        #Above are added codes
-        
-        #add random noise for layer3[2] conv2
-        ori_layer322_grad = model.module.layer3[2].conv2.weight.grad.clone()
-        var_layer322_list.append(torch.var(ori_layer322_grad, unbiased=False))
-        ori_layer322_grad = torch.autograd.Variable(ori_layer322_grad, requires_grad=True)         
-        rand_layer322_grad = torch.rand_like(ori_layer322_grad).cuda()
-        loss_layer322_grad = criterion_grad(ori_layer322_grad,rand_layer322_grad)
-        loss_layer322_grad.backward()
-        #Above are added codes
-        
-        #add random noise for linear
-        ori_linear_grad = model.module.linear.weight.grad.clone()
-        var_linear_list.append(torch.var(ori_linear_grad, unbiased=False))
-        ori_linear_grad = torch.autograd.Variable(ori_linear_grad, requires_grad=True)         
-        rand_linear_grad = torch.rand_like(ori_linear_grad).cuda()
-        loss_linear_grad = criterion_grad(ori_linear_grad,rand_linear_grad)
-        loss_linear_grad.backward()
-        #Above are added codes
+        #Add Noise Here
+        #Reverese Grad Here
 
         optimizer.step()
 
@@ -426,193 +256,195 @@ if __name__ == "__main__":
     main()
        
     
-    for i in range(len(var_conv1_list)):
-        var_conv1_list[i] = var_conv1_list[i].cpu().data
+#     for i in range(len(var_conv1_list)):
+#         var_conv1_list[i] = var_conv1_list[i].cpu().data
     
-    for i in range(len(var_layer101_list)):
-        var_layer101_list[i] = var_layer101_list[i].cpu().data
+#     for i in range(len(var_layer101_list)):
+#         var_layer101_list[i] = var_layer101_list[i].cpu().data
     
-    for i in range(len(var_layer102_list)):
-        var_layer102_list[i] = var_layer102_list[i].cpu().data
+#     for i in range(len(var_layer102_list)):
+#         var_layer102_list[i] = var_layer102_list[i].cpu().data
     
-    for i in range(len(var_layer111_list)):
-        var_layer111_list[i] = var_layer111_list[i].cpu().data
+#     for i in range(len(var_layer111_list)):
+#         var_layer111_list[i] = var_layer111_list[i].cpu().data
     
-    for i in range(len(var_layer112_list)):
-        var_layer112_list[i] = var_layer112_list[i].cpu().data
+#     for i in range(len(var_layer112_list)):
+#         var_layer112_list[i] = var_layer112_list[i].cpu().data
         
-    for i in range(len(var_layer121_list)):
-        var_layer121_list[i] = var_layer121_list[i].cpu().data
+#     for i in range(len(var_layer121_list)):
+#         var_layer121_list[i] = var_layer121_list[i].cpu().data
     
-    for i in range(len(var_layer122_list)):
-        var_layer122_list[i] = var_layer122_list[i].cpu().data
+#     for i in range(len(var_layer122_list)):
+#         var_layer122_list[i] = var_layer122_list[i].cpu().data
     
-    for i in range(len(var_layer201_list)):
-        var_layer201_list[i] = var_layer201_list[i].cpu().data
+#     for i in range(len(var_layer201_list)):
+#         var_layer201_list[i] = var_layer201_list[i].cpu().data
     
-    for i in range(len(var_layer202_list)):
-        var_layer202_list[i] = var_layer202_list[i].cpu().data
+#     for i in range(len(var_layer202_list)):
+#         var_layer202_list[i] = var_layer202_list[i].cpu().data
         
-    for i in range(len(var_layer211_list)):
-        var_layer211_list[i] = var_layer211_list[i].cpu().data
+#     for i in range(len(var_layer211_list)):
+#         var_layer211_list[i] = var_layer211_list[i].cpu().data
     
-    for i in range(len(var_layer212_list)):
-        var_layer212_list[i] = var_layer212_list[i].cpu().data
+#     for i in range(len(var_layer212_list)):
+#         var_layer212_list[i] = var_layer212_list[i].cpu().data
     
-    for i in range(len(var_layer221_list)):
-        var_layer221_list[i] = var_layer221_list[i].cpu().data
+#     for i in range(len(var_layer221_list)):
+#         var_layer221_list[i] = var_layer221_list[i].cpu().data
     
-    for i in range(len(var_layer222_list)):
-        var_layer222_list[i] = var_layer222_list[i].cpu().data
+#     for i in range(len(var_layer222_list)):
+#         var_layer222_list[i] = var_layer222_list[i].cpu().data
     
-    for i in range(len(var_layer301_list)):
-        var_layer301_list[i] = var_layer301_list[i].cpu().data
+#     for i in range(len(var_layer301_list)):
+#         var_layer301_list[i] = var_layer301_list[i].cpu().data
     
-    for i in range(len(var_layer302_list)):
-        var_layer302_list[i] = var_layer302_list[i].cpu().data
+#     for i in range(len(var_layer302_list)):
+#         var_layer302_list[i] = var_layer302_list[i].cpu().data
     
-    for i in range(len(var_layer311_list)):
-        var_layer311_list[i] = var_layer311_list[i].cpu().data
+#     for i in range(len(var_layer311_list)):
+#         var_layer311_list[i] = var_layer311_list[i].cpu().data
     
-    for i in range(len(var_layer312_list)):
-        var_layer312_list[i] = var_layer312_list[i].cpu().data
+#     for i in range(len(var_layer312_list)):
+#         var_layer312_list[i] = var_layer312_list[i].cpu().data
     
-    for i in range(len(var_layer321_list)):
-        var_layer321_list[i] = var_layer321_list[i].cpu().data
+#     for i in range(len(var_layer321_list)):
+#         var_layer321_list[i] = var_layer321_list[i].cpu().data
     
-    for i in range(len(var_layer322_list)):
-        var_layer322_list[i] = var_layer322_list[i].cpu().data
+#     for i in range(len(var_layer322_list)):
+#         var_layer322_list[i] = var_layer322_list[i].cpu().data
     
-    for i in range(len(var_linear_list)):
-        var_linear_list[i] = var_linear_list[i].cpu().data
-    
-    
+#     for i in range(len(var_linear_list)):
+#         var_linear_list[i] = var_linear_list[i].cpu().data
     
     
     
-    fig = plt.figure(figsize=(16,40))
-    #added for gradient variance check
-    
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,1)
-    plt.plot(var_conv1_list)
-    plt.title('conv1 layer')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,2)
-    plt.plot(var_layer101_list)
-    plt.title('layer101')
+#     fig = plt.figure(figsize=(16,40))
+#     #added for gradient variance check
+    
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,1)
+#     plt.plot(var_conv1_list)
+#     plt.title('conv1 layer')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,3)
-    plt.plot(var_layer102_list)
-    plt.title('layer102')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,2)
+#     plt.plot(var_layer101_list)
+#     plt.title('layer101')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,4)
-    plt.plot(var_layer111_list)
-    plt.title('layer111')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,3)
+#     plt.plot(var_layer102_list)
+#     plt.title('layer102')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,5)
-    plt.plot(var_layer112_list)
-    plt.title('layer112')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,4)
+#     plt.plot(var_layer111_list)
+#     plt.title('layer111')
     
     
-    #fig = plt.figure(figsize=(16,8)
-    plt.subplot(10,2,6)
-    plt.plot(var_layer121_list)
-    plt.title('layer121')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,5)
+#     plt.plot(var_layer112_list)
+#     plt.title('layer112')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,7)
-    plt.plot(var_layer122_list)
-    plt.title('layer122')
+#     #fig = plt.figure(figsize=(16,8)
+#     plt.subplot(10,2,6)
+#     plt.plot(var_layer121_list)
+#     plt.title('layer121')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,8)
-    plt.plot(var_layer201_list)
-    plt.title('layer201')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,7)
+#     plt.plot(var_layer122_list)
+#     plt.title('layer122')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,9)
-    plt.plot(var_layer202_list)
-    plt.title('layer202')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,8)
+#     plt.plot(var_layer201_list)
+#     plt.title('layer201')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,10)
-    plt.plot(var_layer211_list)
-    plt.title('layer211')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,9)
+#     plt.plot(var_layer202_list)
+#     plt.title('layer202')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,11)
-    plt.plot(var_layer212_list)
-    plt.title('layer212')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,10)
+#     plt.plot(var_layer211_list)
+#     plt.title('layer211')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,12)
-    plt.plot(var_layer221_list)
-    plt.title('layer221')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,11)
+#     plt.plot(var_layer212_list)
+#     plt.title('layer212')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,13)
-    plt.plot(var_layer222_list)
-    plt.title('layer222')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,12)
+#     plt.plot(var_layer221_list)
+#     plt.title('layer221')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,14)
-    plt.plot(var_layer301_list)
-    plt.title('layer301')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,13)
+#     plt.plot(var_layer222_list)
+#     plt.title('layer222')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,15)
-    plt.plot(var_layer302_list)
-    plt.title('layer302')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,14)
+#     plt.plot(var_layer301_list)
+#     plt.title('layer301')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,16)
-    plt.plot(var_layer311_list)
-    plt.title('layer311')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,15)
+#     plt.plot(var_layer302_list)
+#     plt.title('layer302')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,17)
-    plt.plot(var_layer312_list)
-    plt.title('layer312')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,16)
+#     plt.plot(var_layer311_list)
+#     plt.title('layer311')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,18)
-    plt.plot(var_layer321_list)
-    plt.title('layer321')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,17)
+#     plt.plot(var_layer312_list)
+#     plt.title('layer312')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,19)
-    plt.plot(var_layer322_list)
-    plt.title('layer322')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,18)
+#     plt.plot(var_layer321_list)
+#     plt.title('layer321')
     
     
-    #fig = plt.figure(figsize=(16,8))
-    plt.subplot(10,2,20)
-    plt.plot(var_linear_list)
-    plt.title('layerlinear')
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,19)
+#     plt.plot(var_layer322_list)
+#     plt.title('layer322')
+    
+    
+#     #fig = plt.figure(figsize=(16,8))
+#     plt.subplot(10,2,20)
+#     plt.plot(var_linear_list)
+#     plt.title('layerlinear')
    
     
     
     
-    plt.show()
+#     plt.show()
+    
+
