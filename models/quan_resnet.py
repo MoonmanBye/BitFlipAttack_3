@@ -14,7 +14,7 @@ class DownsampleA(nn.Module):
         x = self.avg(x)
         return torch.cat((x, x.mul(0)), 1)
 
-class SimpleNet(nn.module):
+class SimpleNet(nn.Module):
     def __init__(self, n_bits=8):
         super(SimpleNet, self).__init__()
         self.n_bits = n_bits
