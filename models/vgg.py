@@ -16,11 +16,11 @@ class VGG(nn.Module):
     '''
     VGG model 
     '''
-    def __init__(self, num_output=10, n_bits=8, output_act='linear', features):
+    def __init__(self, num_output=10, n_bits=8, output_act='linear'):
         super(VGG, self).__init__()
         self.n_bits = n_bits
         self.num_output = num_output
-        self.features = features
+          
         self.classifier = nn.Sequential(
             nn.Dropout(),
             nn.Linear(512, 512),
@@ -30,6 +30,8 @@ class VGG(nn.Module):
             nn.ReLU(True),
             nn.Linear(512, 10),
         )
+        
+        features = make_layers(cfg['A'], batch_norm=True)
          # Initialize weights
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
