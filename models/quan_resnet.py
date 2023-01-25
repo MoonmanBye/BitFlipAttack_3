@@ -30,6 +30,7 @@ class SimpleNet(nn.Module):
         self.fc1 = quan_Linear(4*4*64, 500, bias=False, n_bits=self.n_bits)
         self.fc2 = quan_Linear(500, num_output, bias=False, n_bits=self.n_bits)
         self.dropout = nn.Dropout(0.25)
+        self.output_act = nn.Tanh() if output_act == 'tanh' else None
 
         # Initialize weights
         for m in self.modules():
