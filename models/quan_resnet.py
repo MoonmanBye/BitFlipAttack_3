@@ -21,8 +21,11 @@ class SimpleNet(nn.Module):
         self.num_output = num_output
 
         self.conv1 = quan_Conv2d(3, 16, kernel_size=3, stride=1, padding=1, bias=False, n_bits=self.n_bits)
+        self.bn1 = nn.BatchNorm2d(16)
         self.conv2 = quan_Conv2d(16, 32, kernel_size=3, stride=1, padding=1, bias=False, n_bits=self.n_bits)
+        self.bn2 = nn.BatchNorm2d(32)
         self.conv3 = quan_Conv2d(32, 64, kernel_size=3, stride=1, padding=1, bias=False, n_bits=self.n_bits)
+        self.bn3 = nn.BatchNorm2d(64)
         self.pool = nn.MaxPool2d(2, 2)
         self.fc1 = quan_Linear(4*4*64, 500, bias=False, n_bits=self.n_bits)
         self.fc2 = quan_Linear(500, num_output, bias=False, n_bits=self.n_bits)
@@ -38,11 +41,11 @@ class SimpleNet(nn.Module):
 
     def forward(self, x):
         # add sequence of convolutional and max pooling layers
-        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.bn1(self.conv1(x))))
         #print('conv1_shape,', x.shape)
-        x = self.pool(F.relu(self.conv2(x)))
+        x = self.pool(F.relu(self.bn2(self.conv2(x))))
         #print('conv2_shape,', x.shape)
-        x = self.pool(F.relu(self.conv3(x)))
+        x = self.pool(F.relu(self.bn3(self.conv3(x))))
         #print('conv3_shape,', x.shape)
         # flatten image input
         x = x.view(-1, 64 * 4 * 4)
@@ -57,6 +60,7 @@ class SimpleNet(nn.Module):
         # add 2nd hidden layer, with relu activation function
         x = self.fc2(x)
         #print('fc2_shape,', x.shape)
+        x = self.output_act(x) if self.output_act is not None else x
         return x
 
     
