@@ -134,6 +134,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
 
         loss.backward()
         
+        '''
         #Add Noise Here
         var_grad_conv1 = generateNoise(model.module.conv1.weight.grad)
         var_conv1_list.append(var_grad_conv1)
@@ -145,6 +146,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         var_fc1_list.append(var_grad_fc1)
         var_grad_fc2 = generateNoise(model.module.fc2.weight.grad)
         var_fc2_list.append(var_grad_fc2)
+        '''
         
         #Reverese Grad Here
 
