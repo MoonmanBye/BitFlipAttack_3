@@ -271,7 +271,7 @@ if __name__ == "__main__":
     var_list=[]
    
     #needed function
-    criterion_grad = nn.MSELoss()
+    #criterion_grad = nn.MSELoss()
     
     main()
        
