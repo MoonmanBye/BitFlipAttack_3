@@ -132,7 +132,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top1.update(acc1.item(), inputs.size(0))
         top5.update(acc5.item(), inputs.size(0))
 
-        loss.backward()
+        loss.backward(retain_graph=True)
         
         '''
         #Add Noise Here
