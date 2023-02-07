@@ -73,28 +73,11 @@ def TransferToCpu(var_list):
     return var_list
 
 def PlotVar():
-    fig = plt.figure(figsize=(8,20))
+    fig = plt.figure(figsize=(16,8))
     #added for gradient variance check
     #fig = plt.figure(figsize=(16,8))
-    plt.subplot(5,1,1)
-    plt.plot(var_conv1_list)
-    plt.title('conv1 layer')
-    
-    plt.subplot(5,1,2)
-    plt.plot(var_conv2_list)
-    plt.title('conv2 layer')
-    
-    plt.subplot(5,1,3)
-    plt.plot(var_conv3_list)
-    plt.title('conv3 layer')
-    
-    plt.subplot(5,1,4)
-    plt.plot(var_fc1_list)
-    plt.title('fc1 layer')
-    
-    plt.subplot(5,1,5)
-    plt.plot(var_fc2_list)
-    plt.title('fc2 layer')
+    plt.plot(var__list)
+    plt.title('linear layer')
     plt.show()
 
 
@@ -149,7 +132,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         '''
         
         ori_grad =model.module.linear.weight.grad.clone()
-        var_grad=(torch.var(ori_grad, unbiased=False))
+        var_list.append(torch.var(ori_grad, unbiased=False))
         ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
         rand_grad = torch.rand_like(ori_grad).cuda()
         loss_grad = criterion_grad(ori_grad,rand_grad)
@@ -226,6 +209,8 @@ def main():
         assert args.output_act == 'linear'
         n_output = args.num_classes
         criterion = CrossEntropyLoss()
+        #Add for Variance Check
+        criterion_grad = nn.MSELoss()
         C = torch.tensor(np.eye(args.num_classes)).to(device)
     model = models.__dict__[args.arch](n_output, args.bits, args.output_act)
     model = nn.DataParallel(model, gpu_list).to(device) if len(gpu_list) > 1 else nn.DataParallel(model).to(device)
@@ -283,42 +268,14 @@ def main():
 if __name__ == "__main__":
        
     #Some parameters
-    var_conv1_list=[]
-    var_conv2_list=[]
-    var_conv3_list=[]
-    var_fc1_list=[]
-    var_fc2_list=[]
-    
-    var_layer101_list=[]
-    var_layer102_list=[]
-    var_layer111_list=[]
-    var_layer112_list=[]
-    var_layer121_list=[]
-    var_layer122_list=[]
-    var_layer201_list=[]
-    var_layer202_list=[]
-    var_layer211_list=[]
-    var_layer212_list=[]
-    var_layer221_list=[]
-    var_layer222_list=[]
-    var_layer301_list=[]
-    var_layer302_list=[]
-    var_layer311_list=[]
-    var_layer312_list=[]
-    var_layer321_list=[]
-    var_layer322_list=[]
-    var_linear_list=[]
-    
+    var_list=[]
+   
     #needed function
     criterion_grad = nn.MSELoss()
     
     main()
        
-    var_conv1_list = TransferToCpu(var_conv1_list)
-    var_conv2_list = TransferToCpu(var_conv2_list)
-    var_conv3_list = TransferToCpu(var_conv3_list)
-    var_fc1_list = TransferToCpu(var_fc1_list)
-    var_fc2_list = TransferToCpu(var_fc2_list)
+    var_list = TransferToCpu(var_list)
     PlotVar()
 
     
