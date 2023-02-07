@@ -16,13 +16,13 @@ parser.add_argument('--data_dir', type=str, default='data/')
 parser.add_argument('--dataset', type=str, default='CIFAR10', help='dataset for processing')
 parser.add_argument('--num_classes', '-c', default=10, type=int, help='number of classes in the dataset')
 #parser.add_argument('--arch', '-a', type=str, default='resnet20_quan', help='model architecture')
-parser.add_argument('--arch', '-a', type=str, default='SmallNet', help='model architecture')
+parser.add_argument('--arch', '-a', type=str, default='resnet20_quan', help='model architecture')
 parser.add_argument('--bits', type=int, default=8, help='quantization bits')
 parser.add_argument('--ocm', action='store_true', help='output layer coding with bit strings')
 parser.add_argument('--output_act', type=str, default='linear', help='output act. (only linear and tanh is supported)')
 parser.add_argument('--code_length', '-cl', default=16, type=int, help='length of codewords')
 parser.add_argument('--outdir', type=str, default='results/', help='folder to save model and training log')
-parser.add_argument('--epochs', '-e', default=50, type=int, metavar='N', help='number of total epochs to run') #default from 160
+parser.add_argument('--epochs', '-e', default=150, type=int, metavar='N', help='number of total epochs to run') #default from 160
 parser.add_argument('--batch', '-b', default=128, type=int, metavar='N', help='Mini-batch size (default: 128)')
 parser.add_argument('--opt', type=str, default='sgd', help='sgd or adam optimizer')
 parser.add_argument('--lr', default=0.1, type=float, help='initial learning rate')
@@ -147,6 +147,14 @@ def train(loader, model, criterion, optimizer, epoch, C):
         var_grad_fc2 = generateNoise(model.module.fc2.weight.grad)
         var_fc2_list.append(var_grad_fc2)
         '''
+        
+        ori_grad =model.module.linear.weight.grad.clone()
+        var_grad=(torch.var(ori_grad, unbiased=False))
+        ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
+        rand_grad = torch.rand_like(ori_grad).cuda()
+        loss_grad = criterion_grad(ori_grad,rand_grad)
+        loss_grad.backward()
+
         
         #Reverese Grad Here
 
